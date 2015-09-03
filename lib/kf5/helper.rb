@@ -33,7 +33,8 @@ module KF5
       return options unless respond_to? :current_user
       [:username, :name, :phone].each { |key| 
         property = KF5.configuration.properties.send(key)
-        value = current_user.send(property) if current_user.respond_to? property
+        next if property.nil? || !current_user.respond_to?(property)
+        value = current_user.send(property)
         options[key] = value unless value.nil?
       }
       options

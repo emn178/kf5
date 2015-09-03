@@ -60,6 +60,14 @@ RSpec.describe KF5::Helper do
         }
         its(:redirect_url) { should eq "https://domain.kf5.com/user/remote?username=username%40email.com&time=1441197000&token=086348249d957524cecd90e4e7e10200&name=name&phone=phone" }
       end
+
+      context "without nil property" do
+        before { 
+          allow(KF5.configuration.properties).to receive(:phone).and_return(:nil)
+          controller.redirect_to_kf5
+        }
+        its(:redirect_url) { should eq "https://domain.kf5.com/user/remote?username=username&time=1441197000&token=92eede2f9079c408171d90cd2e30a46e&name=name" }
+      end
     end
 
     context "without current_user" do

@@ -25,9 +25,14 @@ KF5.configure do |config|
   config.domain = "your domain of KF5 service"
 
   # if you use devise, it will fetch following information from current_user if exsit
-  config.properties.username = :your_username_column # default is username
-  config.properties.name = :your_name_column # default is name
-  config.properties.phone = :your_phone_column # default is phone
+  # default is :username, this is identification
+  config.properties.username = :your_username_column
+
+  # default is :name, optional
+  config.properties.name = :your_name_column
+
+  # default is :phone, optional
+  config.properties.phone = :your_phone_column
 end
 ```
 
@@ -35,17 +40,14 @@ end
 
 In rails controllers, you can call `redirect_to_kf5` to redirect_to_kf5 for SSO. This will fetch information from `current_user` automatically if you use devise:
 ```ruby
-// ... my controller
+# ... my controller
 def my_action
   redirect_to_kf5
 end
 ```
 Or you can assaign arguments manaully
 ```ruby
-// ... my controller
-def my_action
-  redirect_to_kf5 :username => 'username' // others....
-end
+redirect_to_kf5 :username => 'username' # others....
 ```
 
 ## License
