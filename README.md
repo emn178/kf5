@@ -1,6 +1,6 @@
 # KF5
 
-[![Build Status](https://api.travis-ci.org/emn178/kf5.png)](https://travis-ci.org/emn178/kf5)  
+[![Build Status](https://api.travis-ci.org/emn178/kf5.png)](https://travis-ci.org/emn178/kf5)
 [![Coverage Status](https://coveralls.io/repos/emn178/kf5/badge.svg?branch=master)](https://coveralls.io/r/emn178/kf5?branch=master)
 
 A library to integrate with KF5 help desk.[逸創云客服](http://www.kf5.com/)
