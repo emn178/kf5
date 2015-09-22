@@ -16,7 +16,7 @@
             iframeURL          : '//' + kf5Domain + '/supportbox/index',
             btn_icon           : '//assets.kf5.com/supportbox/images/icon2.png',
             styleURL           : '//assets.kf5.com/supportbox/css/btn.css',
-            template           : '<div id="kw-tab" class="kf5-support-btn" style="{{bg_color}}"> <img src="{{btn_icon}}" alt=""><span>{{title}}</span> </div> <div id="kw-block" class="kf5-support"> <a id="kw-close" class="kf5-close" title="关闭"><i class="icon-clear"></i></a> <div id="kw-loading" class="kf5-loading"> </div> <iframe id="kw-widget-iframe" src="" scrolling="no" frameborder="0"></iframe> </div>'
+            template           : '<div id="kw-tab" class="kf5-support-btn" style="{{bg_color}}"> <img src="{{btn_icon}}" alt=""><span>{{title}}</span> </div> <div id="kw-block" class="kf5-support"> <a id="kw-close" class="kf5-close" title="关闭"><i class="kf5-icon-clear"></i></a> <div id="kw-loading" class="kf5-loading"> </div> <iframe id="kw-widget-iframe" src="" scrolling="no" frameborder="0"></iframe> </div>'
         };
 
     function KF5SupportBox(config)
@@ -116,6 +116,7 @@
 
             this.el = window.document.createElement('div');
             this.el.setAttribute('class', className);
+            this.el.setAttribute('id', 'kf5-support-123456789');
             this.el.innerHTML = this.getOpt('template')
                     .replace('{{title}}', this.getOpt('btn_name') || '获取帮助')
                     .replace('{{btn_icon}}', this.getOpt('btn_icon'))
@@ -180,11 +181,11 @@
         {
             if(!this.isOpened)
             {
-                hideElement(this.getElement('#kw-tab'));
+                var self = this;
 
                 this.loadIframe();
-                // slideUp(this.getElement('#kw-widget-iframe'), 400);
-                slideUp(this.getElement('#kw-block'), 400);
+                slideDown(this.getElement('#kw-tab'), {duration: 200, easing: 'swing'});
+                slideUp(self.getElement('#kw-block'), {duration: 200, easing: 'swing'});
 
                 cookie('kf5-supportBox-autoOpen', 1, {expires: 3 / 24, path: '/'});
 
@@ -194,11 +195,27 @@
 
         close: function(e)
         {
-            // slideDown(this.getElement('#kw-widget-iframe'), 400);
-            slideDown(this.getElement('#kw-block'), 400);
+            // slideDown(this.getElement('#kw-block'), 200);
+            // showElement(this.getElement('#kw-tab'));
+            var self = this;
 
-            showElement(this.getElement('#kw-tab'));
-            // this.getElement('#kw-widget-iframe').setAttribute('src', '');
+            slideDown(
+                this.getElement('#kw-block'), 
+                {
+                    duration: 200, 
+                    easing: 'swing', 
+                    callback: function()
+                    {
+                        slideUp(
+                            self.getElement('#kw-tab'), 
+                            {
+                                duration: 200, 
+                                easing: 'swing'
+                            }
+                        );
+                    }
+                }
+            );
             
             cookie('kf5-supportBox-autoOpen', null, {path: '/'});
 
@@ -209,6 +226,11 @@
     var supportbox;
     function onload()
     {
+        // if(supportbox)
+        // {
+        //     return;
+        // }
+
         var script = window.document.createElement('script'),
             configURL = supportboxConfigURL;
 
@@ -229,6 +251,12 @@
 
     document.addEventListener('page:load', onload, false);
     window.addEventListener('load', onload, false);
+
+    if(!window.initializeKF5SupportBox)
+    {
+        // 暴露初始化方法，以解决特殊情况下load事件无法触发
+        window.initializeKF5SupportBox = onload;
+    }
 
     // allow cross origin operation
     window.addEventListener('message', function(e)
@@ -417,7 +445,20 @@
         return curCSS && curCSS(el, style);
     }
 
-    function slideUp(elem, duration)
+    var easing = {
+
+        swing: function(p)
+        {
+            return 0.5 - Math.cos( p * Math.PI ) / 2;
+        },
+
+        linear: function(p)
+        {
+            return p;
+        }
+    };
+
+    function slideUp(elem, options)
     {
         var originalStyle = elem.getAttribute('style');
         elem.style.display = 'block';
@@ -425,17 +466,18 @@
 
         elem.style.height = '0px';
 
-        duration = duration || 500;
+        var duration = options.duration || 500;
         var tStart = Date.now(),
-            cost = 0,
+            percent = 0,
             timer = setInterval(function()
             {
-                cost = (Date.now() - tStart) / duration;
-                cost = cost > 1 ? 1 : cost;
+                percent = (Date.now() - tStart) / duration;
+                percent = percent > 1 ? 1 : percent;
 
-                elem.style.height = cost * originalHeight + 'px';
+                elem.style.height = (easing[options.easing || 'swing'](percent) 
+                        * originalHeight) + 'px';
 
-                if(cost >= 1)
+                if(percent >= 1)
                 {
                     clearInterval(timer);
                     timer = null;
@@ -449,28 +491,31 @@
                         elem.removeAttribute('style');
                     }
                     elem.style.display = 'block';
+
+                    options.callback && options.callback.call(elem);
                 }
             }, 1000 / 60);
     }
 
-    function slideDown(elem, duration)
+    function slideDown(elem, options)
     {
         var originalStyle = elem.getAttribute('style');
         elem.style.display = 'block';
 
         var originalHeight = parseInt(getStyle(elem, 'height'));
 
-        duration = duration || 500;
+        var duration = options.duration || 500;
         var tStart = Date.now(),
-            cost = 0,
+            percent = 0,
             timer = setInterval(function()
             {
-                cost = (Date.now() - tStart) / duration;
-                cost = cost > 1 ? 1 : cost;
+                percent = (Date.now() - tStart) / duration;
+                percent = percent > 1 ? 1 : percent;
 
-                elem.style.height = (1 - cost) * originalHeight + 'px';
+                elem.style.height = (easing[options.easing || 'swing'](1 - percent) 
+                        * originalHeight) + 'px';
 
-                if(cost >= 1)
+                if(percent >= 1)
                 {
                     clearInterval(timer);
                     timer = null;
@@ -484,6 +529,8 @@
                         elem.removeAttribute('style');
                     }
                     elem.style.display = 'none';
+
+                    options.callback && options.callback.call(elem);
                 }
             }, 1000 / 60);
     }

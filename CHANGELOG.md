@@ -1,3 +1,7 @@
+# v0.2.1 / 2015-09-22
+
+* update kf5.js
+
 # v0.2.0 / 2015-09-19
 
 * add embedded javascript plugin.
