@@ -7,6 +7,7 @@ require "kf5/properties"
 require "kf5/helper"
 require "kf5/view_helper"
 require "kf5/controller_helper"
+require "kf5/engine"
 
 module KF5
   Columns = [:username, :name, :phone, :photo]
