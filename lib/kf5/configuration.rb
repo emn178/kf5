@@ -1,7 +1,7 @@
 module KF5
   class Configuration
     attr_reader :properties
-    attr_accessor :key, :domain
+    attr_accessor :key, :domain, :remember_me
 
     def initialize(options = {})
       options.each { |key, value| 

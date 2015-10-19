@@ -26,9 +26,11 @@ For rails, create config `config/initializers/kf5.rb`
 KF5.configure do |config|
   config.key = "your key of KF5 service"
   config.domain = "your domain of KF5 service"
+  # 1: login for 30 days, 0: login for 30 minutes
+  # config.remember_me = 1
 
   # if you use devise, it will fetch following information from current_user if exsit
-  # default is :username, this is identification
+  # default is :username, this is identification with email format
   config.properties.username = :your_username_column
 
   # default is :name, optional
@@ -36,6 +38,9 @@ KF5.configure do |config|
 
   # default is :phone, optional
   config.properties.phone = :your_phone_column
+
+  # default is :photo, optional
+  config.properties.photo = :your_photo_column
 end
 ```
 
@@ -51,6 +56,10 @@ end
 Or you can assaign arguments manaully
 ```ruby
 redirect_to_kf5 :username => 'username' # others....
+```
+Or you do not want to sso
+```ruby
+redirect_to_kf5 :sso => false
 ```
 
 In view, you can use `kf5_tag` to include javascript plugin.

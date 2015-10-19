@@ -1,6 +1,6 @@
 module KF5
   class Properties
-    attr_accessor :username, :name, :phone
+    attr_accessor :username, :name, :phone, :photo
 
     def initialize(options = {})
       @username = :username

@@ -1,3 +1,9 @@
+# v0.3.0 / 2015-10-19
+
+* Add sso option with redirect.
+* Add remember_me configuration.
+* Add photo property.
+
 # v0.2.1 / 2015-09-22
 
 * update kf5.js
