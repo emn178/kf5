@@ -1,3 +1,7 @@
+# v0.3.2 / 2015-10-30
+
+* Fixed wrong namespace.
+
 # v0.3.0 / 2015-10-19
 
 * Add sso option with redirect.

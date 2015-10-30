@@ -1,5 +1,5 @@
 if defined?(::Rails::Engine)
-  module UsertimeRails
+  module KF5
     class Engine < ::Rails::Engine
       initializer "kf5" do
         ActiveSupport.on_load :action_controller do
