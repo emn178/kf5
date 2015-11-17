@@ -32,7 +32,7 @@ For rails, create config `config/initializers/kf5.rb`
 KF5.configure do |config|
   config.domain = "your.domain"
 
-  # do not set key to disable SSO 
+  # disable SSO if key is nil
   config.key = "your key of KF5 service"
 
   # 1: login for 30 days, 0: login for 30 minutes
