@@ -1,3 +1,8 @@
+# v0.3.3 / 2015-11-17
+
+* Disable SSO if key is nil.
+* Enhance performance of turbolinks support.
+
 # v0.3.2 / 2015-10-30
 
 * Fixed wrong namespace.

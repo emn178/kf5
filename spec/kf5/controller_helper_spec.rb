@@ -79,6 +79,14 @@ RSpec.describe KF5::ControllerHelper do
         before { controller.redirect_to_kf5(:sso => false) }
         its(:redirect_url) { should eq "https://domain.kf5.com/" }
       end
+
+      context "without key" do
+        before { 
+          allow(KF5.configuration).to receive(:key).and_return(:nil)
+          controller.redirect_to_kf5(:sso => false) 
+        }
+        its(:redirect_url) { should eq "https://domain.kf5.com/" }
+      end
     end
 
     context "without current_user" do

@@ -21,7 +21,7 @@ module KF5
     end
 
     def redirect_to_kf5(options = {})
-      if Helper.indifferent_access(options, :sso) == false
+      if Helper.indifferent_access(options, :sso) == false || KF5.configuration.key.nil?
         redirect_to "https://#{KF5.configuration.domain}.kf5.com/"
       else
         redirect_to current_user_kf5_url(options)

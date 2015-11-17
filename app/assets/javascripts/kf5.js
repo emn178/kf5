@@ -1,3 +1,5 @@
+//= require kf5.turbolinks
+
 (function(window, config)
 {
     "use strict";
@@ -226,10 +228,10 @@
     var supportbox;
     function onload()
     {
-        // if(supportbox)
-        // {
-        //     return;
-        // }
+        if(supportbox)
+        {
+            return;
+        }
 
         var script = window.document.createElement('script'),
             configURL = supportboxConfigURL;
@@ -249,7 +251,6 @@
         });
     }
 
-    document.addEventListener('page:load', onload, false);
     window.addEventListener('load', onload, false);
 
     if(!window.initializeKF5SupportBox)

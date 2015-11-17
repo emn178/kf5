@@ -13,6 +13,12 @@ Add this line to your application's Gemfile:
 gem 'kf5'
 ```
 
+Make sure you have:
+
+```ruby
+gem 'jquery-rails'
+```
+
 And then execute:
 
     bundle
@@ -24,8 +30,11 @@ Or install it yourself as:
 For rails, create config `config/initializers/kf5.rb`
 ```ruby
 KF5.configure do |config|
+  config.domain = "your.domain"
+
+  # do not set key to disable SSO 
   config.key = "your key of KF5 service"
-  config.domain = "your domain of KF5 service"
+
   # 1: login for 30 days, 0: login for 30 minutes
   # config.remember_me = 1
 
