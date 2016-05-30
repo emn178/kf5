@@ -1,3 +1,7 @@
+# v0.4.0 / 2016-05-30
+
+* Used kfs CDN instead of asset file.
+
 # v0.3.3 / 2015-11-17
 
 * Disable SSO if key is nil.

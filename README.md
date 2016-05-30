@@ -76,10 +76,16 @@ In view, you can use `kf5_tag` to include javascript plugin.
 = kf5_tag
 ```
 
+### Turbolinks
+If you're using turbolinks, add the following to js file:
+```JavaScript
+//= require kf5.turbolinks
+```
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
 ## Contact
 The project's website is located at https://github.com/emn178/kf5  
-Author: emn178@gmail.com
+Author: Chen, Yi-Cyuan (emn178@gmail.com)
